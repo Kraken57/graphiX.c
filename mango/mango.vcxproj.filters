@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="mango.c" />
+    <ClCompile Include="example.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="build.sh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="img">
+      <UniqueIdentifier>{01698ed6-f98b-4716-90eb-fe040bca2a62}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Users\kasaa\OneDrive\Pictures\checker.png">
+      <Filter>img</Filter>
+    </Image>
+    <Image Include="..\..\..\Users\kasaa\OneDrive\Pictures\circle.png">
+      <Filter>img</Filter>
+    </Image>
+    <Image Include="..\..\..\Users\kasaa\OneDrive\Pictures\lines.png">
+      <Filter>img</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mango.h" />
+  </ItemGroup>
+</Project>

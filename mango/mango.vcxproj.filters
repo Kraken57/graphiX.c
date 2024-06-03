@@ -23,7 +23,4 @@
       <Filter>img</Filter>
     </Image>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="mango.h" />
-  </ItemGroup>
 </Project>

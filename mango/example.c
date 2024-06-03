@@ -1,183 +1,72 @@
 #include <stdio.h>
 #include <stdint.h>
-#include <stdbool.h>
 #include <errno.h>
 #include <string.h>
-#include "mango.h"
+#include "mango.c"
+
+
 
 #define WIDTH 800
 #define HEIGHT 600
 
-#define COLS (8*2)
-#define ROWS (6*2)
-#define CELL_WIDTH  (WIDTH/COLS)
-#define CELL_HEIGHT (HEIGHT/ROWS)
-
-#define BACKGROUND_COLOR 0xFF202020
-#define FOREGROUND_COLOR 0xFF2020FF
-
-static uint32_t pixels[WIDTH * HEIGHT];
-
-void swap_int(int* a, int* b)
+void mangoc_fill(uint32_t* pixels, size_t width, size_t height, uint32_t color)
 {
-    int t = *a;
-    *a = *b;
-    *b = t;
+	for (size_t i = 0; i < width * height; ++i)
+	{
+		pixels[i] = color;
+	}
 }
 
-void mangoc_draw_line(uint32_t* pixels, size_t pixels_width, size_t pixels_height,
-    int x1, int y1, int x2, int y2,
-    uint32_t color)
+typedef int Errno;
+
+#define return_defer(value) do{ result = (value); goto defer;} while(0)
+
+Errno mangoc_save_to_ppm_file(uint32_t *pixels,size_t width, size_t height, const char *file_path)
 {
-    int dx = x2 - x1;
-    int dy = y2 - y1;
+	int result = 0;
+	FILE* f = NULL;
 
-    if (dx != 0) {
-        int c = y1 - dy * x1 / dx;
+	{
+		errno_t err;
+		err = fopen_s(&f, file_path, "wb");
+		if (err != 0) return_defer(err);
 
-        if (x1 > x2) swap_int(&x1, &x2);
-        for (int x = x1; x <= x2; ++x) {
-            if (0 <= x && x < (int)pixels_width) {
-                int sy1 = dy * x / dx + c;
-                int sy2 = dy * (x + 1) / dx + c;
-                if (sy1 > sy2) swap_int(&sy1, &sy2);
-                for (int y = sy1; y <= sy2; ++y) {
-                    if (0 <= y && y < (int)pixels_height) {
-                        pixels[y * pixels_width + x] = color;
-                    }
-                }
-            }
-        }
-    }
-    else {
-        int x = x1;
-        if (0 <= x && x < (int)pixels_width) {
-            if (y1 > y2) swap_int(&y1, &y2);
-            for (int y = y1; y <= y2; ++y) {
-                if (0 <= y && y < (int)pixels_height) {
-                    pixels[y * pixels_width + x] = color;
-                }
-            }
-        }
-    }
+
+		fprintf(f, "P6\n%zu %zu 255\n", width, height);
+		if (ferror(f)) return_defer(errno);
+
+		for (size_t i = 0; i < width * height; ++i)
+		{
+			// 0XAABBGGRR
+			uint32_t pixel = pixels[i];
+			uint8_t bytes[3] = {
+				(pixel >> (8 * 0)) & 0xFF,
+				(pixel >> (8 * 1)) & 0xFF,
+				(pixel >> (8 * 2)) & 0xFF,
+			};
+			fwrite(bytes, sizeof(bytes), 1, f);
+			if (ferror(f)) return_defer(errno);
+		}
+	}
+
+defer:
+	if (f) fclose(f);
+	return result;
 }
 
-bool checker_example(void)
-{
-    mangoc_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
-
-    for (int y = 0; y < ROWS; ++y) {
-        for (int x = 0; x < COLS; ++x) {
-            uint32_t color = BACKGROUND_COLOR;
-            if ((x + y) % 2 == 0) {
-                color = 0xFF2020FF;
-            }
-            mangoc_fill_rect(pixels, WIDTH, HEIGHT, x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, color);
-        }
-    }
-
-    const char* file_path = "checker.ppm";
-    char err_buf[256];
-    Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
-    if (err) {
-        strerror_s(err_buf, sizeof(err_buf), err);
-        fprintf(stderr, "ERROR: could not save file %s: %s\n", file_path, err_buf);
-        return false;
-    }
-    return true;
-}
-
-float lerpf(float a, float b, float t)
-{
-    return a + (b - a) * t;
-}
-
-bool circle_example(void)
-{
-    mangoc_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
-
-    for (int y = 0; y < ROWS; ++y) {
-        for (int x = 0; x < COLS; ++x) {
-            float u = (float)x / COLS;
-            float v = (float)y / ROWS;
-            float t = (u + v) / 2;
-
-            size_t radius = CELL_WIDTH;
-            if (CELL_HEIGHT < radius) radius = CELL_HEIGHT;
-
-            mangoc_fill_circle(pixels, WIDTH, HEIGHT,
-                x * CELL_WIDTH + CELL_WIDTH / 2, y * CELL_HEIGHT + CELL_HEIGHT / 2,
-                (size_t)lerpf((float)radius / 8, (float)radius / 2, t),
-                FOREGROUND_COLOR);
-        }
-    }
-
-    const char* file_path = "circle.ppm";
-    char err_buf[256];
-    Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
-    if (err) {
-        strerror_s(err_buf, sizeof(err_buf), err);
-        fprintf(stderr, "ERROR: could not save file %s: %s\n", file_path, err_buf);
-        return false;
-    }
-    return true;
-}
-
-bool lines_example(void)
-{
-    mangoc_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
-
-    mangoc_draw_line(pixels, WIDTH, HEIGHT,
-        0, 0, WIDTH, HEIGHT,
-        FOREGROUND_COLOR);
-
-    mangoc_draw_line(pixels, WIDTH, HEIGHT,
-        WIDTH, 0, 0, HEIGHT,
-        FOREGROUND_COLOR);
-
-    mangoc_draw_line(pixels, WIDTH, HEIGHT,
-        0, 0, WIDTH / 4, HEIGHT,
-        0xFF20FF20);
-
-    mangoc_draw_line(pixels, WIDTH, HEIGHT,
-        WIDTH / 4, 0, 0, HEIGHT,
-        0xFF20FF20);
-
-    mangoc_draw_line(pixels, WIDTH, HEIGHT,
-        WIDTH / 2, 0, WIDTH, HEIGHT,
-        0xFF20FF20);
-
-    mangoc_draw_line(pixels, WIDTH, HEIGHT,
-        WIDTH, 0, WIDTH / 4 * 3, HEIGHT,
-        0xFF20FF20);
-
-    mangoc_draw_line(pixels, WIDTH, HEIGHT,
-        WIDTH / 4 * 3, 0, WIDTH, HEIGHT,
-        0xFF20FF20);
-
-    mangoc_draw_line(pixels, WIDTH, HEIGHT,
-        0, HEIGHT / 2, WIDTH, HEIGHT / 2,
-        0xFFFF3030);
-
-    mangoc_draw_line(pixels, WIDTH, HEIGHT,
-        WIDTH / 2, 0, WIDTH / 2, HEIGHT,
-        0xFFFF3030);
-
-    const char* file_path = "lines.ppm";
-    char err_buf[256];
-    Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
-    if (err) {
-        strerror_s(err_buf, sizeof(err_buf), err);
-        fprintf(stderr, "ERROR: could not save file %s: %s\n", file_path, err_buf);
-        return false;
-    }
-    return true;
-}
+static uint32_t pixels[HEIGHT*WIDTH];
 
 int main(void)
 {
-    if (!checker_example()) return -1;
-    if (!circle_example()) return -1;
-    if (!lines_example()) return -1;
-    return 0;
+	mangoc_fill(pixels, WIDTH, HEIGHT, 0xFF00FFFF);
+	const char* file_path = "output.ppm";
+	char err_buf[256];
+	Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
+	if (err) {
+		strerror_s(err_buf, sizeof(err_buf), err);
+		fprintf(stderr, "ERROR: could not save file %s: %s\n", file_path, err_buf);
+		return 1;
+	}
+	return 0;
+
 }

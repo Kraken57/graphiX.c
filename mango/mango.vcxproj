@@ -138,6 +138,9 @@
     <Image Include="..\..\..\Users\kasaa\OneDrive\Pictures\circle.png" />
     <Image Include="..\..\..\Users\kasaa\OneDrive\Pictures\lines.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mango.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

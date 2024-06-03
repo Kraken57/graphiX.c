@@ -28,13 +28,29 @@ void mangoc_fill_rect(uint32_t* pixels, size_t pixels_width, size_t pixels_heigh
 
 static uint32_t pixels[HEIGHT*WIDTH];
 
+#define COLS 8 
+#define ROWS 6
+#define CELL_WIDTH (WIDTH/COLS)
+#define CELL_HEIGHT (HEIGHT/ROWS)
+
 int main(void)
 {
 	mangoc_fill(pixels, WIDTH, HEIGHT, 0xFF202020);
-	size_t rw = 50 * 4;
-	size_t rh = 30 * 4;
 
-	mangoc_fill_rect(pixels, WIDTH, HEIGHT, WIDTH / 2 - rw / 2, HEIGHT / 2 - rh / 2, rw, rh, 0xFF2020FF);
+	for (int y = 0; y < ROWS; ++y) {
+		for (int x = 0; x < COLS; ++x) {
+			uint32_t color;
+			if ((x + y) % 2 == 0) {
+				color = 0xFF0000FF;
+			}
+			else {
+				color = 0xFF00FF00;
+			}
+			mangoc_fill_rect(pixels, WIDTH, HEIGHT, x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, color);
+		}
+	}
+
+
 
 	const char* file_path = "output.ppm";
 	char err_buf[256];

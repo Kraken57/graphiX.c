@@ -10,8 +10,8 @@
 #define WIDTH 800
 #define HEIGHT 600
 
-#define COLS 8 
-#define ROWS 6
+#define COLS (8*3)
+#define ROWS (6*3)
 #define CELL_WIDTH (WIDTH/COLS)
 #define CELL_HEIGHT (HEIGHT/ROWS)
 
@@ -89,7 +89,7 @@ bool circle_example(void)
 
 			mangoc_fill_circle(pixels, WIDTH, HEIGHT,
 				x * CELL_WIDTH + CELL_WIDTH / 2, y * CELL_HEIGHT + CELL_HEIGHT / 2,
-				(size_t)lerpf((float)radius / 4, (float)radius / 2, t),
+				(size_t)lerpf((float)radius / 8, (float)radius / 2, t),
 				FOREGROUND_COLOR);
 		}
 	}

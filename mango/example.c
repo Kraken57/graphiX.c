@@ -140,7 +140,7 @@ bool lines_example(void)
 {
 	mangoc_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
 
-	/*mangoc_draw_line(pixels, WIDTH, HEIGHT,
+	mangoc_draw_line(pixels, WIDTH, HEIGHT,
 		0, 0, WIDTH, HEIGHT,
 		FOREGROUND_COLOR);
 
@@ -174,8 +174,10 @@ bool lines_example(void)
 
 	mangoc_draw_line(pixels, WIDTH, HEIGHT,
 		WIDTH / 2, 0, WIDTH / 2, HEIGHT,
-		0xFFFF3030);*/
+		0xFFFF3030);
 
+
+	//New pattern
 	mangoc_draw_line(pixels, WIDTH, HEIGHT,
 		0, 0, WIDTH, HEIGHT,
 		0xFFFFFFFF);  // Diagonal solid line

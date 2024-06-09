@@ -178,37 +178,37 @@ bool lines_example(void)
 
 
 	//New pattern
-	mangoc_draw_line(pixels, WIDTH, HEIGHT,
-		0, 0, WIDTH, HEIGHT,
-		0xFFFFFFFF);  // Diagonal solid line
+	//mangoc_draw_line(pixels, WIDTH, HEIGHT,
+	//	0, 0, WIDTH, HEIGHT,
+	//	0xFFFFFFFF);  // Diagonal solid line
 
-	mangoc_draw_line(pixels, WIDTH, HEIGHT,
-		WIDTH, 0, 0, HEIGHT,
-		0xFF00FFFF);  // Another diagonal solid line
+	//mangoc_draw_line(pixels, WIDTH, HEIGHT,
+	//	WIDTH, 0, 0, HEIGHT,
+	//	0xFF00FFFF);  // Another diagonal solid line
 
-	mangoc_draw_line(pixels, WIDTH, HEIGHT,
-		0, HEIGHT / 4, WIDTH, HEIGHT / 4,
-		0xFF20FF20);  // Horizontal dashed line
+	//mangoc_draw_line(pixels, WIDTH, HEIGHT,
+	//	0, HEIGHT / 4, WIDTH, HEIGHT / 4,
+	//	0xFF20FF20);  // Horizontal dashed line
 
-	mangoc_draw_line(pixels, WIDTH, HEIGHT,
-		WIDTH / 4, 0, WIDTH / 4, HEIGHT,
-		0xFFFF20FF);  // Vertical dashed line
+	//mangoc_draw_line(pixels, WIDTH, HEIGHT,
+	//	WIDTH / 4, 0, WIDTH / 4, HEIGHT,
+	//	0xFFFF20FF);  // Vertical dashed line
 
-	mangoc_draw_line(pixels, WIDTH, HEIGHT,
-		WIDTH / 2, 0, WIDTH, HEIGHT / 2,
-		0xFFFFA500);  // Diagonal dotted line
+	//mangoc_draw_line(pixels, WIDTH, HEIGHT,
+	//	WIDTH / 2, 0, WIDTH, HEIGHT / 2,
+	//	0xFFFFA500);  // Diagonal dotted line
 
-	mangoc_draw_line(pixels, WIDTH, HEIGHT,
-		0, HEIGHT / 2, WIDTH, HEIGHT,
-		0xFF20FFFF);  // Diagonal zigzag line
+	//mangoc_draw_line(pixels, WIDTH, HEIGHT,
+	//	0, HEIGHT / 2, WIDTH, HEIGHT,
+	//	0xFF20FFFF);  // Diagonal zigzag line
 
-	mangoc_draw_line(pixels, WIDTH, HEIGHT,
-		WIDTH / 4, HEIGHT / 2, WIDTH / 4 * 3, HEIGHT / 2,
-		0xFFFF3030);  // Horizontal solid line
+	//mangoc_draw_line(pixels, WIDTH, HEIGHT,
+	//	WIDTH / 4, HEIGHT / 2, WIDTH / 4 * 3, HEIGHT / 2,
+	//	0xFFFF3030);  // Horizontal solid line
 
-	mangoc_draw_line(pixels, WIDTH, HEIGHT,
-		WIDTH / 2, HEIGHT / 4, WIDTH / 2, HEIGHT / 4 * 3,
-		0xFF3030FF);  // Vertical solid line
+	//mangoc_draw_line(pixels, WIDTH, HEIGHT,
+	//	WIDTH / 2, HEIGHT / 4, WIDTH / 2, HEIGHT / 4 * 3,
+	//	0xFF3030FF);  // Vertical solid line
 
 
 	const char* file_path = "lines.ppm";

@@ -20,57 +20,6 @@
 
 static uint32_t pixels[HEIGHT*WIDTH];
 
-void swap_int(int* a, int* b)
-{
-	int t = *a;
-	*a = *b;
-	*b = t;
-}
-
-void mangoc_draw_line(uint32_t* pixels, size_t pixels_width, size_t pixels_height,
-	int x1, int y1, int x2, int y2,
-	uint32_t color)
-{
-	// y = k*x + c
-	//let y1= k*x1 + c and y2 = k*x2 + c
-	//Rearranging we get 
-	// y1 - k*x1 = c and (y2 - y1)/(x2 - x1) = k
-
-	int dx = x2 - x1;
-	int dy = y2 - y1;
-
-	if (dx != 0) {
-		int c = y1 - dy * x1 / dx;
-
-		if (x1 > x2) swap_int(&x1, &x2);
-		for (int x = x1; x <= x2; ++x) {
-			if (0 <= x && x < (int)pixels_width) {
-				int sy1 = dy * x / dx + c;
-				int sy2 = dy * (x + 1) / dx + c;
-				if (sy1 > sy2) swap_int(&sy1, &sy2);
-				for (int y = sy1; y <= sy2; ++y) {
-					if (0 <= y && y < (int)pixels_height) {
-						pixels[y * pixels_width + x] = color;
-					}
-				}
-			}
-		}
-	
-	
-	}
-	else {
-		int x = x1;
-		if (0 <= x && x < (int)pixels_width) {
-			if (y1 > y2) swap_int(&y1, &y2);
-			for (int y = y1; y <= y2; ++y) {
-				if (0 <= y && y < (int)pixels_height) {
-					pixels[y * pixels_width + x] = color;
-				}
-			}
-		}
-	}
-}
-
 
 bool checker_example(void)
 {

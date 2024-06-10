@@ -51,7 +51,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-.vs/
-.vscode/
+
 *.ppm
-example
+bin/
+

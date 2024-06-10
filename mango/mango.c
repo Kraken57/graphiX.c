@@ -10,6 +10,8 @@ typedef int Errno;
 
 #define return_defer(value) do { result = (value); goto defer; } while (0)
 #define OLIVEC_SWAP(T, a, b) do { T t = a; a = b; b = t; } while (0)
+#define OLIVEC_SIGN(T, x) ((T)((x) > 0) - (T)((x) < 0))
+#define OLIVEC_ABS(T, x) (OLIVEC_SIGN(T, x)*(x))
 
 void mangoc_fill(uint32_t* pixels, size_t width, size_t height, uint32_t color)
 {
@@ -54,13 +56,16 @@ defer:
 }
 
 void mangoc_fill_rect(uint32_t* pixels, size_t pixels_width, size_t pixels_height,
-	int x0, int y0, size_t w, size_t h, uint32_t color)
+	int x1, int y1, int w, int h, uint32_t color)
 {
-	for (int dy = 0; dy < (int)h; ++dy) {
-		int y = y0 + dy;
+	int x2 = x1 + OLIVEC_SIGN(int, w) * (OLIVEC_ABS(int, w) - 1);
+	if (x1 > x2) OLIVEC_SWAP(int, x1, x2);
+	int y2 = y1 + OLIVEC_SIGN(int, h) * (OLIVEC_ABS(int, h) - 1);
+	if (y1 > y2) OLIVEC_SWAP(int, y1, y2);
+
+	for (int y = y1; y <= y2; ++y) {
 		if (0 <= y && y < (int)pixels_height) {
-			for (int dx = 0; dx < (int)w; ++dx) {
-				int x = x0 + dx;
+			for (int x = x1; x <= x2; ++x) {
 				if (0 <= x && x < (int)pixels_width) {
 					pixels[y * pixels_width + x] = color;
 				}
@@ -72,11 +77,20 @@ void mangoc_fill_rect(uint32_t* pixels, size_t pixels_width, size_t pixels_heigh
 void mangoc_fill_circle(uint32_t* pixels, size_t pixels_width, size_t pixels_height,
 	int cx, int cy, int r, uint32_t color)
 {
+	if (r == 0) return;
+
 	int x1 = cx - r;
-	int y1 = cy - r;
 	int x2 = cx + r;
+	
+	if (x1 > x2) OLIVEC_SWAP(int, x1, x2);
+
+	int y1 = cy - r;
 	int y2 = cy + r;
+
+	if (y1 > y2) OLIVEC_SWAP(int, y1, y2);
+
 	for (int y = y1; y <= y2; ++y) {
+
 		if (0 <= y && y < (int)pixels_height) {
 			for (int x = x1; x <= x2; ++x) {
 				if (0 <= x && x < (int)pixels_width) {

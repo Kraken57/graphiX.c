@@ -1,2 +1,7 @@
 ﻿  example.c
+  mango.c
+  Generating Code...
+C:\MYPROJECTS\graphiX.c\mango\example.c(92,2): warning C4013: 'mangoc_draw_line' undefined; assuming extern returning int
+C:\MYPROJECTS\graphiX.c\mango\mango.c(59,22): warning C4028: formal parameter 6 different from declaration
+C:\MYPROJECTS\graphiX.c\mango\mango.c(59,29): warning C4028: formal parameter 7 different from declaration
   mango.vcxproj -> C:\MYPROJECTS\graphiX.c\mango\x64\Debug\mango.exe

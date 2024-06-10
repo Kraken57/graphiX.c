@@ -18,6 +18,8 @@
 #define BACKGROUND_COLOR 0xFF202020
 #define FOREGROUND_COLOR 0xFF2020FF
 
+#define IMGS_DIR_PATH "./imgs"
+
 static uint32_t pixels[HEIGHT*WIDTH];
 
 
@@ -37,7 +39,9 @@ bool checker_example(void)
 
 
 
-	const char* file_path = "checker.ppm";
+	const char* file_path = IMGS_DIR_PATH"/checker.ppm";
+	printf("Generated %s\n", file_path);
+
 	char err_buf[256];
 	Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
 	if (err) {
@@ -73,7 +77,9 @@ bool circle_example(void)
 		}
 	}
 
-	const char* file_path = "circle.ppm";
+	const char* file_path = IMGS_DIR_PATH"/circle.ppm";
+	printf("Generated %s\n", file_path);
+
 	char err_buf[256];
 	Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
 	if (err) {
@@ -160,7 +166,9 @@ bool lines_example(void)
 	//	0xFF3030FF);  // Vertical solid line
 
 
-	const char* file_path = "lines.ppm";
+	const char* file_path = IMGS_DIR_PATH"/lines.ppm";
+	printf("Generated %s\n", file_path);
+
 	char err_buf[256];
 	Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
 	if (err) {

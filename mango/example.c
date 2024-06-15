@@ -18,9 +18,8 @@
 #define BACKGROUND_COLOR 0xFF202020
 #define FOREGROUND_COLOR 0xFF2020FF
 
-#define IMGS_DIR_PATH "./imgs"
 
-static uint32_t pixels[HEIGHT*WIDTH];
+static uint32_t pixels[HEIGHT * WIDTH];
 
 
 bool checker_example(void)
@@ -39,8 +38,7 @@ bool checker_example(void)
 
 
 
-	const char* file_path = IMGS_DIR_PATH"/checker.ppm";
-	printf("Generated %s\n", file_path);
+	const char* file_path = "checker.ppm";
 
 	char err_buf[256];
 	Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
@@ -77,8 +75,7 @@ bool circle_example(void)
 		}
 	}
 
-	const char* file_path = IMGS_DIR_PATH"/circle.ppm";
-	printf("Generated %s\n", file_path);
+	const char* file_path = "circle.ppm";
 
 	char err_buf[256];
 	Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
@@ -166,8 +163,7 @@ bool lines_example(void)
 	//	0xFF3030FF);  // Vertical solid line
 
 
-	const char* file_path = IMGS_DIR_PATH"/lines.ppm";
-	printf("Generated %s\n", file_path);
+	const char* file_path = "lines.ppm";
 
 	char err_buf[256];
 	Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
@@ -181,11 +177,41 @@ bool lines_example(void)
 
 }
 
+bool triangle_example(void)
+{
+    mangoc_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
+
+    mangoc_fill_triangle(pixels, WIDTH, HEIGHT,
+        WIDTH / 2, HEIGHT / 4,  // Vertex 1
+        WIDTH / 4, HEIGHT / 2,  // Vertex 2
+        WIDTH / 2, HEIGHT / 2,  // Vertex 3
+        FOREGROUND_COLOR);
+
+    mangoc_fill_triangle(pixels, WIDTH, HEIGHT,
+        WIDTH / 2, HEIGHT / 2,  // Vertex 1
+        WIDTH / 4 * 3, HEIGHT / 2,  // Vertex 2
+        WIDTH / 2, HEIGHT / 4 * 3,  // Vertex 3
+        0xFF20FF20);
+
+    const char* file_path = "triangle.ppm";
+
+    char err_buf[256];
+    Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
+    if (err) {
+        strerror_s(err_buf, sizeof(err_buf), err);
+        fprintf(stderr, "ERROR: could not save file %s: %s\n", file_path, err_buf);
+        return false;
+    }
+    return true;
+}
+
+
 int main(void)
 {
 	if (!checker_example()) return -1;
 	if (!circle_example()) return -1;
 	if (!lines_example()) return -1;
+	if (!triangle_example()) return -1;
 
 	return 0;
 

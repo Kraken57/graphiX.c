@@ -8,19 +8,19 @@
     <None Include="build.sh" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="img">
+    <Filter Include="imgs">
       <UniqueIdentifier>{01698ed6-f98b-4716-90eb-fe040bca2a62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Users\kasaa\OneDrive\Pictures\checker.png">
-      <Filter>img</Filter>
+      <Filter>imgs</Filter>
     </Image>
     <Image Include="..\..\..\Users\kasaa\OneDrive\Pictures\circle.png">
-      <Filter>img</Filter>
+      <Filter>imgs</Filter>
     </Image>
     <Image Include="..\..\..\Users\kasaa\OneDrive\Pictures\lines.png">
-      <Filter>img</Filter>
+      <Filter>imgs</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

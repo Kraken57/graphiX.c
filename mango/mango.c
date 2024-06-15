@@ -5,13 +5,14 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <stdbool.h>
 
 typedef int Errno;
 
 #define return_defer(value) do { result = (value); goto defer; } while (0)
-#define OLIVEC_SWAP(T, a, b) do { T t = a; a = b; b = t; } while (0)
-#define OLIVEC_SIGN(T, x) ((T)((x) > 0) - (T)((x) < 0))
-#define OLIVEC_ABS(T, x) (OLIVEC_SIGN(T, x)*(x))
+#define MANGOC_SWAP(T, a, b) do { T t = a; a = b; b = t; } while (0)
+#define MANGOC_SIGN(T, x) ((T)((x) > 0) - (T)((x) < 0))
+#define MANGOC_ABS(T, x) (MANGOC_SIGN(T, x)*(x))
 
 void mangoc_fill(uint32_t* pixels, size_t width, size_t height, uint32_t color)
 {
@@ -58,10 +59,10 @@ defer:
 void mangoc_fill_rect(uint32_t* pixels, size_t pixels_width, size_t pixels_height,
 	int x1, int y1, int w, int h, uint32_t color)
 {
-	int x2 = x1 + OLIVEC_SIGN(int, w) * (OLIVEC_ABS(int, w) - 1);
-	if (x1 > x2) OLIVEC_SWAP(int, x1, x2);
-	int y2 = y1 + OLIVEC_SIGN(int, h) * (OLIVEC_ABS(int, h) - 1);
-	if (y1 > y2) OLIVEC_SWAP(int, y1, y2);
+	int x2 = x1 + MANGOC_SIGN(int, w) * (MANGOC_ABS(int, w) - 1);
+	if (x1 > x2) MANGOC_SWAP(int, x1, x2);
+	int y2 = y1 + MANGOC_SIGN(int, h) * (MANGOC_ABS(int, h) - 1);
+	if (y1 > y2) MANGOC_SWAP(int, y1, y2);
 
 	for (int y = y1; y <= y2; ++y) {
 		if (0 <= y && y < (int)pixels_height) {
@@ -81,13 +82,13 @@ void mangoc_fill_circle(uint32_t* pixels, size_t pixels_width, size_t pixels_hei
 
 	int x1 = cx - r;
 	int x2 = cx + r;
-	
-	if (x1 > x2) OLIVEC_SWAP(int, x1, x2);
+
+	if (x1 > x2) MANGOC_SWAP(int, x1, x2);
 
 	int y1 = cy - r;
 	int y2 = cy + r;
 
-	if (y1 > y2) OLIVEC_SWAP(int, y1, y2);
+	if (y1 > y2) MANGOC_SWAP(int, y1, y2);
 
 	for (int y = y1; y <= y2; ++y) {
 
@@ -155,6 +156,33 @@ void mangoc_draw_line(uint32_t* pixels, size_t pixels_width, size_t pixels_heigh
 		}
 	}
 }
+
+void mangoc_fill_triangle(uint32_t* pixels, size_t pixels_width, size_t pixels_height,
+	int x0, int y0, int x1, int y1, int x2, int y2, uint32_t color)
+{
+	if (y0 > y1) { MANGOC_SWAP(int, y0, y1); MANGOC_SWAP(int, x0, x1); }
+	if (y0 > y2) { MANGOC_SWAP(int, y0, y2); MANGOC_SWAP(int, x0, x2); }
+	if (y1 > y2) { MANGOC_SWAP(int, y1, y2); MANGOC_SWAP(int, x1, x2); }
+
+	int total_height = y2 - y0;
+	for (int i = 0; i < total_height; i++) {
+		bool second_half = i > y1 - y0 || y1 == y0;
+		int segment_height = second_half ? y2 - y1 : y1 - y0;
+		float alpha = (float)i / total_height;
+		float beta = (float)(i - (second_half ? y1 - y0 : 0)) / segment_height;
+		int ax = x0 + (x2 - x0) * alpha;
+		int ay = y0 + i;
+		int bx = second_half ? x1 + (x2 - x1) * beta : x0 + (x1 - x0) * beta;
+		int by = y0 + i;
+		if (ax > bx) { MANGOC_SWAP(int, ax, bx); MANGOC_SWAP(int, ay, by); }
+		for (int j = ax; j <= bx; j++) {
+			if (0 <= j && j < (int)pixels_width && 0 <= ay && ay < (int)pixels_height) {
+				pixels[ay * pixels_width + j] = color;
+			}
+		}
+	}
+}
+
 
 
 

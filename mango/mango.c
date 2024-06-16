@@ -157,6 +157,8 @@ void mangoc_draw_line(uint32_t* pixels, size_t pixels_width, size_t pixels_heigh
 	}
 }
 
+
+//triangle logic 
 void mangoc_fill_triangle(uint32_t* pixels, size_t pixels_width, size_t pixels_height,
 	int x0, int y0, int x1, int y1, int x2, int y2, uint32_t color)
 {
@@ -183,6 +185,69 @@ void mangoc_fill_triangle(uint32_t* pixels, size_t pixels_width, size_t pixels_h
 	}
 }
 
+//polygon logic
+void mangoc_fill_polygon(uint32_t* pixels, size_t pixels_width, size_t pixels_height,
+	const int* xs, const int* ys, size_t n, uint32_t color)
+{
+	if (n < 3) return; // A polygon must have at least 3 vertices
+
+	// Find the bounding box of the polygon
+	int min_y = ys[0];
+	int max_y = ys[0];
+	for (size_t i = 1; i < n; ++i) {
+		if (ys[i] < min_y) min_y = ys[i];
+		if (ys[i] > max_y) max_y = ys[i];
+	}
+
+	// Scanline fill algorithm
+	for (int y = min_y; y <= max_y; ++y) {
+		// Find intersections with the scanline
+		int intersections[256]; // Maximum number of intersections, increase if necessary
+		int num_intersections = 0;
+
+		for (size_t i = 0; i < n; ++i) {
+			size_t j = (i + 1) % n;
+
+			int y1 = ys[i], y2 = ys[j];
+			int x1 = xs[i], x2 = xs[j];
+
+			if (y1 == y2) continue; // Skip horizontal edges
+
+			if (y < y1 && y < y2) continue; // The scanline is above the edge
+			if (y > y1 && y > y2) continue; // The scanline is below the edge
+
+			if (y1 > y2) { MANGOC_SWAP(int, y1, y2); MANGOC_SWAP(int, x1, x2); }
+
+			// Compute the intersection of the scanline with the edge
+			int x = x1 + (y - y1) * (x2 - x1) / (y2 - y1);
+			intersections[num_intersections++] = x;
+		}
+
+		// Sort intersections
+		for (int i = 0; i < num_intersections - 1; ++i) {
+			for (int j = i + 1; j < num_intersections; ++j) {
+				if (intersections[i] > intersections[j]) {
+					MANGOC_SWAP(int, intersections[i], intersections[j]);
+				}
+			}
+		}
+
+		// Fill the pixels between pairs of intersections
+		for (int i = 0; i < num_intersections; i += 2) {
+			if (i + 1 >= num_intersections) break;
+			int x1 = intersections[i];
+			int x2 = intersections[i + 1];
+
+			if (x1 > x2) MANGOC_SWAP(int, x1, x2);
+
+			for (int x = x1; x <= x2; ++x) {
+				if (0 <= x && x < (int)pixels_width && 0 <= y && y < (int)pixels_height) {
+					pixels[y * pixels_width + x] = color;
+				}
+			}
+		}
+	}
+}
 
 
 

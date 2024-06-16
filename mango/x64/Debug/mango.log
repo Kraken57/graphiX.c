@@ -1,6 +1,6 @@
-﻿  mango.c
-C:\MYPROJECTS\graphiX.c\mango\mango.c(60,22): warning C4028: formal parameter 6 different from declaration
-C:\MYPROJECTS\graphiX.c\mango\mango.c(60,29): warning C4028: formal parameter 7 different from declaration
-C:\MYPROJECTS\graphiX.c\mango\mango.c(175,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\MYPROJECTS\graphiX.c\mango\mango.c(177,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+﻿  example.c
+C:\MYPROJECTS\graphiX.c\mango\example.c(118,2): warning C4013: 'mangoc_draw_line' undefined; assuming extern returning int
+C:\MYPROJECTS\graphiX.c\mango\example.c(260,14): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\MYPROJECTS\graphiX.c\mango\example.c(261,14): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\MYPROJECTS\graphiX.c\mango\example.c(259,33): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   mango.vcxproj -> C:\MYPROJECTS\graphiX.c\mango\x64\Debug\mango.exe

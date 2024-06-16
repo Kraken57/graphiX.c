@@ -3,6 +3,13 @@
 #include <stdbool.h>
 #include <errno.h>
 #include <string.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+#include <math.h>
+#include <stdlib.h> 
 #include "mango.h"
 
 
@@ -19,7 +26,23 @@
 #define FOREGROUND_COLOR 0xFF2020FF
 
 
-static uint32_t pixels[HEIGHT * WIDTH];
+//static uint32_t pixels[HEIGHT * WIDTH];
+
+
+
+static uint32_t pixels[WIDTH * HEIGHT] = { 0 };
+
+bool save_image(const char* file_path)
+{
+	char err_buf[256];
+	Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
+	if (err) {
+		strerror_s(err_buf, sizeof(err_buf), err);
+		fprintf(stderr, "ERROR: could not save file %s: %s\n", file_path, err_buf);
+		return false;
+	}
+	return true;
+}
 
 
 bool checker_example(void)
@@ -208,24 +231,42 @@ bool triangle_example(void)
 
 bool polygon_example(void)
 {
-	mangoc_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
+	mangoc_fill(pixels, WIDTH, HEIGHT, 0xFF202020); // Fill canvas with background color
 
-	// Define vertices of a polygon (hexagon in this example)
-	int xs[] = { WIDTH / 4, WIDTH / 2, WIDTH / 4 * 3, WIDTH / 4 * 3, WIDTH / 2, WIDTH / 4 };
-	int ys[] = { HEIGHT / 2, HEIGHT / 4, HEIGHT / 2, HEIGHT / 4 * 3, HEIGHT / 4 * 3, HEIGHT / 4 };
-
-	mangoc_fill_polygon(pixels, WIDTH, HEIGHT, xs, ys, sizeof(xs) / sizeof(xs[0]), FOREGROUND_COLOR);
-
-	const char* file_path = "polygon.ppm";
-
-	char err_buf[256];
-	Errno err = mangoc_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
-	if (err) {
-		strerror_s(err_buf, sizeof(err_buf), err);
-		fprintf(stderr, "ERROR: could not save file %s: %s\n", file_path, err_buf);
+	int sides;
+	printf("Enter the number of sides for the polygon: ");
+	if (scanf_s("%d", &sides) != 1 || sides < 3) {
+		fprintf(stderr, "ERROR: Invalid number of sides\n");
 		return false;
 	}
-	return true;
+
+	// Dynamically allocate arrays for vertices
+	int* xs = (int*)malloc(sides * sizeof(int));
+	int* ys = (int*)malloc(sides * sizeof(int));
+
+	if (!xs || !ys) {
+		fprintf(stderr, "ERROR: Memory allocation failed\n");
+		if (xs) free(xs);
+		if (ys) free(ys);
+		return false;
+	}
+
+	int radius = HEIGHT / 3;
+	int cx = WIDTH / 2;
+	int cy = HEIGHT / 2;
+
+	for (int i = 0; i < sides; ++i) {
+		float angle = 2.0f * M_PI * i / sides;
+		xs[i] = cx + radius * cosf(angle);
+		ys[i] = cy + radius * sinf(angle);
+	}
+
+	mangoc_fill_polygon(pixels, WIDTH, HEIGHT, xs, ys, sides, 0xFF2020FF); // Fill polygon with foreground color
+
+	free(xs);
+	free(ys);
+
+	return save_image("polygon.ppm");
 }
 
 

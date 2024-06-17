@@ -33,11 +33,40 @@ static uint32_t pixels[WIDTH * HEIGHT] = { 0 };
 
 
 // A larger 4x4 sprite with different colors
-static const uint32_t sprite[16] = {
+static const uint32_t sprite0[16] = {
 	0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFFFFFF00,
 	0xFFFFFF00, 0xFFFF0000, 0xFF00FF00, 0xFF0000FF,
 	0xFF0000FF, 0xFFFFFF00, 0xFFFF0000, 0xFF00FF00,
 	0xFF00FF00, 0xFF0000FF, 0xFFFFFF00, 0xFFFF0000
+};
+
+// Sprites (4x4 pixel representations)
+static const uint32_t sprite1[16] = {
+	0xFFFFA500, 0xFF000000, 0xFF000000, 0xFFFFA500,
+	0xFF000000, 0xFFFFA500, 0xFFFFA500, 0xFF000000,
+	0xFF000000, 0xFFFFA500, 0xFFFFA500, 0xFF000000,
+	0xFFFFA500, 0xFF000000, 0xFF000000, 0xFFFFA500
+};
+
+static const uint32_t sprite2[16] = {
+	0xFF000000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFF000000,
+	0xFF000000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFF000000,
+	0xFFFFFFFF, 0xFF000000, 0xFF000000, 0xFFFFFFFF,
+	0xFFFFFFFF, 0xFF000000, 0xFF000000, 0xFFFFFFFF
+};
+
+static const uint32_t sprite3[16] = {
+	0xFF000000, 0xFF000000, 0xFF000000, 0xFF000000,
+	0xFF000000, 0xFFFF0000, 0xFFFF0000, 0xFF000000,
+	0xFF000000, 0xFFFF0000, 0xFFFF0000, 0xFF000000,
+	0xFF000000, 0xFF000000, 0xFF000000, 0xFF000000
+};
+
+static const uint32_t sprite4[16] = {
+	0xFF00FFFF, 0xFF00FFFF, 0xFF000000, 0xFF000000,
+	0xFF000000, 0xFF00FFFF, 0xFF00FFFF, 0xFF000000,
+	0xFF00FFFF, 0xFF00FFFF, 0xFF000000, 0xFF000000,
+	0xFF000000, 0xFF000000, 0xFF00FFFF, 0xFF00FFFF
 };
 
 
@@ -279,14 +308,13 @@ bool polygon_example(void)
 }
 
 
-bool sprite_example(void)
+bool sprite_example(const uint32_t* sprite, size_t sprite_width, size_t sprite_height, const char* file_name)
 {
 	mangoc_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
 	float scale = 50; // Scale the sprite by a factor of 50
-	mangoc_draw_sprite(pixels, WIDTH, HEIGHT, sprite, 4, 4, WIDTH / 2 - (2 * scale), HEIGHT / 2 - (2 * scale), scale);
-	return save_image("sprite.ppm");
+	mangoc_draw_sprite(pixels, WIDTH, HEIGHT, sprite, sprite_width, sprite_height, WIDTH / 2 - (2 * scale), HEIGHT / 2 - (2 * scale), scale);
+	return save_image(file_name);
 }
-
 
 
 int main(void)
@@ -296,7 +324,13 @@ int main(void)
 	if (!lines_example()) return -1;
 	if (!triangle_example()) return -1;
 	if (!polygon_example()) return -1;
-	if (!sprite_example()) return -1;
+	
+	// Display different sprites
+	if (!sprite_example(sprite0, 4, 4, "sprite0.ppm")) return -1;
+	if (!sprite_example(sprite1, 4, 4, "sprite1.ppm")) return -1;
+	if (!sprite_example(sprite2, 4, 4, "sprite2.ppm")) return -1;
+	if (!sprite_example(sprite3, 4, 4, "sprite3.ppm")) return -1;
+	if (!sprite_example(sprite4, 4, 4, "sprite4.ppm")) return -1;
 
 	return 0;
 

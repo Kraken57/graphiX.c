@@ -1,18 +1,18 @@
 ﻿  example.c
-C:\MYPROJECTS\graphiX.c\mango\example.c(127,2): warning C4013: 'mangoc_draw_line' undefined; assuming extern returning int
-C:\MYPROJECTS\graphiX.c\mango\example.c(269,14): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\MYPROJECTS\graphiX.c\mango\example.c(270,14): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\MYPROJECTS\graphiX.c\mango\example.c(268,33): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\MYPROJECTS\graphiX.c\mango\example.c(286,68): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\MYPROJECTS\graphiX.c\mango\example.c(286,94): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\MYPROJECTS\graphiX.c\mango\example.c(156,2): warning C4013: 'mangoc_draw_line' undefined; assuming extern returning int
+C:\MYPROJECTS\graphiX.c\mango\example.c(298,14): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\MYPROJECTS\graphiX.c\mango\example.c(299,14): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\MYPROJECTS\graphiX.c\mango\example.c(297,33): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\MYPROJECTS\graphiX.c\mango\example.c(315,91): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\MYPROJECTS\graphiX.c\mango\example.c(315,117): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
   mango.c
 C:\MYPROJECTS\graphiX.c\mango\mango.c(60,22): warning C4028: formal parameter 6 different from declaration
 C:\MYPROJECTS\graphiX.c\mango\mango.c(60,29): warning C4028: formal parameter 7 different from declaration
 C:\MYPROJECTS\graphiX.c\mango\mango.c(175,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 C:\MYPROJECTS\graphiX.c\mango\mango.c(177,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\MYPROJECTS\graphiX.c\mango\mango.c(262,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 C:\MYPROJECTS\graphiX.c\mango\mango.c(263,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\MYPROJECTS\graphiX.c\mango\mango.c(264,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\MYPROJECTS\graphiX.c\mango\mango.c(264,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 C:\MYPROJECTS\graphiX.c\mango\mango.c(265,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\MYPROJECTS\graphiX.c\mango\mango.c(266,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   Generating Code...
   mango.vcxproj -> C:\MYPROJECTS\graphiX.c\mango\x64\Debug\mango.exe

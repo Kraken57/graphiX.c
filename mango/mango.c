@@ -250,7 +250,8 @@ void mangoc_fill_polygon(uint32_t* pixels, size_t pixels_width, size_t pixels_he
 }
 
 
-//for sprites rendering
+//for sprite rendering 
+
 void mangoc_draw_sprite(uint32_t* pixels, size_t pixels_width, size_t pixels_height,
 	const uint32_t* sprite, size_t sprite_width, size_t sprite_height, int x, int y, float scale)
 {

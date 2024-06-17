@@ -29,8 +29,17 @@
 //static uint32_t pixels[HEIGHT * WIDTH];
 
 
-
 static uint32_t pixels[WIDTH * HEIGHT] = { 0 };
+
+
+// A larger 4x4 sprite with different colors
+static const uint32_t sprite[16] = {
+	0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFFFFFF00,
+	0xFFFFFF00, 0xFFFF0000, 0xFF00FF00, 0xFF0000FF,
+	0xFF0000FF, 0xFFFFFF00, 0xFFFF0000, 0xFF00FF00,
+	0xFF00FF00, 0xFF0000FF, 0xFFFFFF00, 0xFFFF0000
+};
+
 
 bool save_image(const char* file_path)
 {
@@ -270,6 +279,16 @@ bool polygon_example(void)
 }
 
 
+bool sprite_example(void)
+{
+	mangoc_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
+	float scale = 50; // Scale the sprite by a factor of 50
+	mangoc_draw_sprite(pixels, WIDTH, HEIGHT, sprite, 4, 4, WIDTH / 2 - (2 * scale), HEIGHT / 2 - (2 * scale), scale);
+	return save_image("sprite.ppm");
+}
+
+
+
 int main(void)
 {
 	if (!checker_example()) return -1;
@@ -277,6 +296,7 @@ int main(void)
 	if (!lines_example()) return -1;
 	if (!triangle_example()) return -1;
 	if (!polygon_example()) return -1;
+	if (!sprite_example()) return -1;
 
 	return 0;
 

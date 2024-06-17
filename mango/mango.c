@@ -250,5 +250,31 @@ void mangoc_fill_polygon(uint32_t* pixels, size_t pixels_width, size_t pixels_he
 }
 
 
+//for sprites rendering
+void mangoc_draw_sprite(uint32_t* pixels, size_t pixels_width, size_t pixels_height,
+	const uint32_t* sprite, size_t sprite_width, size_t sprite_height, int x, int y, float scale)
+{
+	for (size_t sy = 0; sy < sprite_height; ++sy) {
+		for (size_t sx = 0; sx < sprite_width; ++sx) {
+			uint32_t color = sprite[sy * sprite_width + sx];
+			if (color >> 24) // If alpha is not zero
+			{
+				int start_x = x + sx * scale;
+				int start_y = y + sy * scale;
+				int end_x = start_x + scale;
+				int end_y = start_y + scale;
+
+				for (int py = start_y; py < end_y; ++py) {
+					for (int px = start_x; px < end_x; ++px) {
+						if (px >= 0 && px < (int)pixels_width && py >= 0 && py < (int)pixels_height) {
+							pixels[py * pixels_width + px] = color;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 
 #endif // MANGO_c_

@@ -51,6 +51,8 @@ Mango Graphics Library is a lightweight 2D graphics library implemented in C, de
     1. Open the solution in Visual Studio 2022
     2. Click on Local Window Debugger
     ```
+## Shapes 
+![Alt text](imgs/circle.png)
 
 
 ## Usage

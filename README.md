@@ -54,7 +54,11 @@ Mango Graphics Library is a lightweight 2D graphics library implemented in C, de
 ## Shapes 
 ![Alt text](imgs/circle.png) ![Alt text](imgs/checker.png)
 ![Alt text](imgs/lines.png)  ![Alt text](imgs/polygon.png)
-
+![Alt text](imgs/polygon1.png)
+![Alt text](imgs/polygon2.png)
+![Alt text](imgs/triangle.png)
+![Alt text](imgs/sprite1.png)
+![Alt text](imgs/sprite3.png)
 
 ## Usage
 

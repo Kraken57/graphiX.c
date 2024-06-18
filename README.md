@@ -84,4 +84,19 @@ int main() {
 ```c
 mangoc_draw_line(pixels, WIDTH, HEIGHT, 100, 100, 200, 200, 0xFFFFFFFF);
 
+### Drawing a Rectangle
+
+```c
+mangoc_draw_rectangle(pixels, WIDTH, HEIGHT, 50, 50, 150, 100, 0xFF0000FF);
+
+### Drawing a Circle
+
+```c
+mangoc_draw_circle(pixels, WIDTH, HEIGHT, 100, 100, 50, 0xFFFF00FF);
+
+### Filling an Area
+
+```c
+mangoc_fill(pixels, WIDTH, HEIGHT, 0x00FF00FF);
+
 

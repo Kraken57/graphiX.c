@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
 
-Mango Graphics Library is a lightweight 2D graphics library implemented in C, designed to provide basic graphics rendering capabilities and event handling without relying on external graphics libraries. It allows you to create windows, handle keyboard and mouse input, and draw basic shapes and lines.
+graphiX.c is a lightweight 2D graphics library implemented in C, designed to provide basic graphics rendering capabilities and event handling without relying on external graphics libraries. It allows you to create windows, handle keyboard and mouse input, and draw basic shapes and lines.
 
 ## Features
 

@@ -47,7 +47,7 @@ Mango Graphics Library is a lightweight 2D graphics library implemented in C, de
     gcc main.c mango.c -o graphiX.c -lgdi32
     ```
 ### OR
-    ```sh
+    ```
     1. Open the solution in Visual Studio 2022
     2. Click on Local Window Debugger
     ```

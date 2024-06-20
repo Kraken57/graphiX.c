@@ -44,13 +44,13 @@ graphiX.c is a lightweight 2D graphics library implemented in C, designed to pro
 
 2. Compile the project:
     ```sh
-  1. Install [Xming](https://sourceforge.net/projects/xming/)
-  2. Run `export DISPLAY=:0` in the terminal
-  3. Install feh `sudo apt install feh`
-  4. Open this repo solution in Visual Studio 2022
-  5. Click on Local Window Debugger
-  6. run `feh <file_name.ppm>`
-  7. Your file will be visible
+   1. Install [Xming](https://sourceforge.net/projects/xming/)
+   2. Run `export DISPLAY=:0` in the terminal
+   3. Install feh `sudo apt install feh`
+   4. Open this repo solution in Visual Studio 2022
+   5. Click on Local Window Debugger
+   6. run `feh <file_name.ppm>`
+   7. Your file will be visible
     ```
 ## Shapes 
 ![Alt text](imgs/circle.png) ![Alt text](imgs/checker.png)
